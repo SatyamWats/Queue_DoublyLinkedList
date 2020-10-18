@@ -1,0 +1,225 @@
+#include<iostream>
+#include<stdio.h>
+#include<malloc.h>
+
+using namespace std;
+
+struct doubly_list{
+    int info;
+    struct doubly_list *prev;
+    struct doubly_list *next;
+};
+
+typedef struct doubly_list node;
+
+node *start=NULL, *rear=NULL;
+int n;
+int total=0;
+void create()
+{
+    char ch;
+    cout<<"\n Enter size: ";
+    cin>>n;
+    start=rear;
+    do{
+        if(total==n)
+        {
+            cout<<"\n Overflow";
+            break;
+        }
+    cout<<"\n Enter: ";
+    cin>>rear->info;
+    total++;
+    cout<<"\n Do you want to add more elements?: ";
+    cin>>ch;
+    if(ch=='y')
+    {
+        rear->next=(node *)malloc(sizeof(node));
+        rear=rear->next;
+    }
+    }while(ch=='y');
+}
+
+void insertnode()
+{
+    char ch;
+    do{
+    if(total>=n)
+    {
+        cout<<"\n Overflow";
+    }
+    else
+    {
+        rear->next=(node*)malloc(sizeof(node));
+        rear=rear->next;
+        rear->next=NULL;
+        cout<<"\n Enter the info: ";
+        cin>>rear->info;
+        total++;
+    }
+    cout<<"\n Do you want to add more?: ";
+    cin>>ch;
+    }while(ch=='y');
+}
+
+void deletenode()
+{
+    if(total<1)
+    {
+        cout<<"\n Underflow";
+    }
+    else
+    {
+        cout<<"\n Info deleted: "<<rear->info;
+        rear->prev->next=NULL;
+        total--;
+    }
+}
+
+void searchnode()
+{
+    int p;
+    cout<<"\n Enter the position of the element you want to search: ";
+    cin>>p;
+    if(p>total || p<=0)
+    {
+        cout<<"\n Invalid Input";
+    }
+    else
+    {
+        int arr[total];
+        for(int i=0;i<total;i++)
+        {
+            arr[i]=start->info;
+            if(i==p-1)
+            {
+                cout<<"\n Element found: "<<start->info;
+            }
+            if(i==total-1)
+            {
+                start->next=(node*)malloc(sizeof(node));
+                start=start->next;
+            }
+            else{
+                start=start->next;
+            }
+
+        }
+        rear=start;
+        for(int i=0;i<total;i++)
+        {
+            rear->info=arr[i];
+            rear->next=(node*)malloc(sizeof(node));
+            rear=rear->next;
+        }
+        rear->next=NULL;
+    }
+}
+
+void updatenode()
+{
+    int p;
+    cout<<"\n Enter the position of the element you want to update: ";
+    cin>>p;
+    if(p>total || p<=0)
+    {
+        cout<<"\n Invalid Input";
+    }
+    else
+    {
+        int arr[total];
+        for(int i=0;i<total;i++)
+        {
+
+            if(i==p-1)
+            {
+                cout<<"\n Element found";
+                cout<<"\n Enter new value: ";
+                cin>>start->info;
+                cout<<"\n New value: "<<start->info;
+            }
+            arr[i]=start->info;
+            if(i==total-1)
+            {
+                start->next=(node*)malloc(sizeof(node));
+                start=start->next;
+            }
+            else{
+                start=start->next;
+            }
+        }
+        rear=start;
+        for(int i=0;i<total;i++)
+        {
+            rear->info=arr[i];
+            rear->next=(node*)malloc(sizeof(node));
+            rear=rear->next;
+        }
+        rear->next=NULL;
+    }
+}
+
+void displaynode()
+{
+    int arr[total];
+    for(int i=0;i<total;i++)
+    {
+        arr[i]=start->info;
+        cout<<"\n"<<start->info;
+        if(i==total-1)
+            {
+                start->next=(node*)malloc(sizeof(node));
+                start=start->next;
+            }
+            else{
+                start=start->next;
+            }
+    }
+    rear=start;
+    for(int i=0;i<total;i++)
+    {
+        rear->info=arr[i];
+        rear->next=(node *)malloc(sizeof(node));
+        rear=rear->next;
+    }
+    rear->next=NULL;
+}
+
+int main()
+{
+    int ch;
+    char choice;
+    start=(node *)malloc(sizeof(node));
+    rear=(node *)malloc(sizeof(node));
+    do{
+    cout<<"\n Queue implementation using doubly linked list";
+    cout<<"\n 1-Create";
+    cout<<"\n 2-Insert";
+    cout<<"\n 3-Delete";
+    cout<<"\n 4-Search";
+    cout<<"\n 5-Update";
+    cout<<"\n 6-Display";
+    cout<<"\n Enter your choice: ";
+    cin>>ch;
+    switch(ch)
+    {
+        case 1: create();
+                break;
+        case 2: insertnode();
+                break;
+        case 3: deletenode();
+                break;
+        case 4: searchnode();
+                break;
+        case 5: updatenode();
+                break;
+        case 6: displaynode();
+                break;
+        default: cout<<"\n Invalid input";
+                 break;
+    }
+    cout<<"\n Do you want to perform more operations?: ";
+    cin>>choice;
+    }while(choice=='y');
+    return 0;
+}
