@@ -70,8 +70,8 @@ void deletenode()
     }
     else
     {
-        cout<<"\n Info deleted: "<<rear->info;
-        rear->prev->next=NULL;
+        cout<<"\n Info deleted: "<<start->info;
+        start=start->next;
         total--;
     }
 }
